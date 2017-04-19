@@ -2,9 +2,6 @@
 #include <iostream>
 #include <string>
 
-Roman::Roman(std::string number) {
-	//
-	std::cout << number.length() << std::endl;
-	std::cout << number << std::endl;
-	std::cout << number[0] << std::endl;
-}
+Roman::Roman(std::string strNumber) { this->number = strNumber; }
+
+int Roman::getLength() { return number.length(); }
