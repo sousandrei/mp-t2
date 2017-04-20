@@ -36,10 +36,17 @@ Para executar manualmente
 ~~~~~~~~~~~~~~~~~~~~~
 ./build/t2
 ~~~~~~~~~~~~~~~~~~~~~
-Para tracar o code-coverage
+
+Para executar o code-coverage
 ~~~~~~~~~~~~~~~~~~~~~
  make cov
 ~~~~~~~~~~~~~~~~~~~~~
+
+Para executar o cppcheck
+~~~~~~~~~~~~~~~~~~~~~
+ make check
+~~~~~~~~~~~~~~~~~~~~~
+
 Para limpar o projeto
 ~~~~~~~~~~~~~~~~~~~~~
  make clean

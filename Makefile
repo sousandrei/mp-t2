@@ -24,7 +24,7 @@ CPP_FILES = $(wildcard $(SRC_PATH)/*.cpp)
 OBJ_FILES = $(addprefix $(BIN_PATH)/,$(notdir $(CPP_FILES:.cpp=.o)))
 DEP_FILES = $(wildcard $(DEP_PATH)/*.d)
 
-.PHONY: clean test test_build test_run run run_run release debug doc
+.PHONY: clean test test_build test_run run run_run release debug doc check
 
 all: clean $(EXEC)
 $(EXEC): $(OBJ_FILES)
@@ -37,6 +37,9 @@ $(BIN_PATH)/%.o: $(SRC_PATH)/%.cpp
 
 doc: 
 	doxygen Doxyfile
+
+check: 
+	cppcheck --enable=warning src/**/*
 
 run: clean all run_run
 
