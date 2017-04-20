@@ -1,21 +1,21 @@
-RMDIR = rm -rf
-RM = rm
-
+LIBS = -lm -pthread
+GTEST = -lgtest -lgtest_main
+GCOV = -fprofile-arcs -ftest-coverage
 DIRECTIVES = -std=c++11 -Wall -Wextra -c
-LIBS = -lm
 
 EXEC_NAME = t2
+MAIN = src/main.cpp
 
 EXEC = build/$(EXEC_NAME)
-EXEC_TEST = build/$(EXEC_NAME)_test
 
-CC = clang++-3.8
-# CC = g++
+# CC = clang++-3.8
+CC = g++
 
 DEP_FLAGS = -MT $@ -MMD -MP -MF $(DEP_PATH)/$*.d
 
-BUILD_PATH = build
+COV_PATH = cov
 TMP_PATH = tmp
+BUILD_PATH = build
 SRC_PATH = src/cpp
 BIN_PATH = $(TMP_PATH)/cpp
 DEP_PATH = $(TMP_PATH)/hpp
@@ -24,16 +24,16 @@ CPP_FILES = $(wildcard $(SRC_PATH)/*.cpp)
 OBJ_FILES = $(addprefix $(BIN_PATH)/,$(notdir $(CPP_FILES:.cpp=.o)))
 DEP_FILES = $(wildcard $(DEP_PATH)/*.d)
 
-.PHONY: clean test test_build test_run run run_run
+.PHONY: clean test test_build test_run run run_run release debug
 
 all: clean $(EXEC)
-$(EXEC): src/main.cpp $(OBJ_FILES)
-	$(CC) -o $@ $^ $(LIBS)
+$(EXEC): $(OBJ_FILES)
+	$(CC) -o $@ $^ tmp/main.o $(LIBS)
 
-tmp/main.o: src/main.cpp 
 $(BIN_PATH)/%.o: $(SRC_PATH)/%.cpp 
-	@mkdir -p $(DEP_PATH) $(BIN_PATH) $(BUILD_PATH)
-	$(CC) $(DEP_FLAGS) -c -o $@ $< $(DIRECTIVES) -fprofile-arcs -ftest-coverage
+	@mkdir -p $(DEP_PATH) $(BIN_PATH) $(BUILD_PATH) $(COV_PATH)
+	$(CC) -o tmp/main.o $(MAIN) $(DIRECTIVES)
+	$(CC) $(DEP_FLAGS) -c -o $@ $< $(DIRECTIVES)
 
 run: clean all run_run
 
@@ -43,38 +43,33 @@ run_run:
 cov: clean cov_build cov_run
 
 cov_run:
-	rm -rf cov
-	mkdir -p cov/files
 	./build/t2
-	mv *.gc* cov/files 
-	cd cov && gcov main -o files
+	gcov main -o tmp/ -r
+	gcov tmp/cpp/* -o tmp/cpp -r
+	mv *.gcov cov/
 	
-cov_build: $(EXEC)
-$(EXEC): src/main.cpp $(OBJ_FILES)
-	$(CC) -o $@ $^ $(LIBS) -pthread -lgtest -lgtest_main -fprofile-arcs -ftest-coverage
+cov_build: DIRECTIVES += $(GCOV)
+cov_build: GTEST += $(GCOV)
+cov_build: clean test_build
 
 test: clean test_build test_run
 
-test_build: $(EXEC_TEST)
-$(EXEC_TEST): src/test/main.cpp $(OBJ_FILES)
-	$(CC) -o $@ $^ $(LIBS) -pthread -lgtest -lgtest_main
+test_build: MAIN = src/test/main.cpp
+test_build: LIBS += $(GTEST)
+test_build: all
 	
 test_run:
-	./$(EXEC_TEST)
+	./$(EXEC)
 
 debug: DIRECTIVES += -ggdb
-debug: all
+debug: clean all
 
 release: DIRECTIVES += -Ofast -mtune=native
-release: all
-
-print-% : ; @echo $* = $($*)
+release: clean all
 
 clean:
-	$(RMDIR) $(TMP_PATH) $(BUILD_PATH)
-	$(RMDIR) $(TMP_PATH) $(BUILD_PATH) cov
-	$(RM) -f ./*.gcda ./*.gcno ./*.gcov
-	$(RM) -f $(EXEC)
+	rm -rf $(TMP_PATH) $(BUILD_PATH) $(COV_PATH)
+	rm -rf -f $(EXEC)
 
 $(DEP_PATH)/%.d: ;
 .PRECIOUS: $(DEP_PATH)/%.d
