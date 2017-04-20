@@ -1,9 +1,5 @@
-Para compilar: make
-para executar: ./build/t2
+rodar um 'make doc' para documentacao completa
 
-Para compilar os testes: make test
-para executar os testes (manualmente): ./build/t2_test
-
-OBS: o 'make test' ja executa os testes
+README.md - documentacao de README
 
 link do projeto: https://github.com/sousandrei/mp-t2

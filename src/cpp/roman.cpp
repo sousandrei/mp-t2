@@ -58,7 +58,7 @@ Roman::Roman(std::string strNumber) {
 				"String Invalida, character repetido: " + s[i]);
 
 		if (numerals[s[i]] < numerals[s[i + 1]]) {
-			if (s[i] != 'I' && s[i] != 'X' && s[i] != 'C')
+			if (s[i] != 'I' && s[i] != 'X')
 				throw std::invalid_argument(
 					"String Invalida, somente I, X e C podem subtrair: " +
 					s[i]);

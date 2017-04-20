@@ -23,39 +23,39 @@ implementado com tais regras.
 
 
 Para compilar
-```
- make
-```
+~~~~~~~~~~~~~~~~~~~~~
+make
+~~~~~~~~~~~~~~~~~~~~~
 
 Para executar
-```
+~~~~~~~~~~~~~~~~~~~~~
  make run
-```
+~~~~~~~~~~~~~~~~~~~~~
 
 Para executar manualmente
-```
+~~~~~~~~~~~~~~~~~~~~~
 ./build/t2
-```
+~~~~~~~~~~~~~~~~~~~~~
 Para tracar o code-coverage
-```
+~~~~~~~~~~~~~~~~~~~~~
  make cov
-```
+~~~~~~~~~~~~~~~~~~~~~
 Para limpar o projeto
-```
+~~~~~~~~~~~~~~~~~~~~~
  make clean
-```
+~~~~~~~~~~~~~~~~~~~~~
 
 Para compilar e rodar os testes
-```
+~~~~~~~~~~~~~~~~~~~~~
  make test
-```
+~~~~~~~~~~~~~~~~~~~~~
 
 Para executar manualmente
-```
+~~~~~~~~~~~~~~~~~~~~~
  make test_build
  ./build/t2_test
-```
+~~~~~~~~~~~~~~~~~~~~~
 
 OBS: outros target estao no MAKEFILE porem nao sao tao usados
 OBS2: todos os targets executam um `make clean` antes de compilarem, pois
-alguns targets usam flags que precisam da recompilacao de tudo, como o coverage e o test
+alguns targets usam flags que precisam da recompilacao de tudo, como o `coverage` e o `test`
