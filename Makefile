@@ -24,7 +24,7 @@ CPP_FILES = $(wildcard $(SRC_PATH)/*.cpp)
 OBJ_FILES = $(addprefix $(BIN_PATH)/,$(notdir $(CPP_FILES:.cpp=.o)))
 DEP_FILES = $(wildcard $(DEP_PATH)/*.d)
 
-.PHONY: clean test test_build test_run run run_run release debug
+.PHONY: clean test test_build test_run run run_run release debug doc
 
 all: clean $(EXEC)
 $(EXEC): $(OBJ_FILES)
@@ -34,6 +34,9 @@ $(BIN_PATH)/%.o: $(SRC_PATH)/%.cpp
 	@mkdir -p $(DEP_PATH) $(BIN_PATH) $(BUILD_PATH) $(COV_PATH)
 	$(CC) -o tmp/main.o $(MAIN) $(DIRECTIVES)
 	$(CC) $(DEP_FLAGS) -c -o $@ $< $(DIRECTIVES)
+
+doc: 
+	doxygen Doxyfile
 
 run: clean all run_run
 
@@ -68,7 +71,7 @@ release: DIRECTIVES += -Ofast -mtune=native
 release: clean all
 
 clean:
-	rm -rf $(TMP_PATH) $(BUILD_PATH) $(COV_PATH)
+	rm -rf $(TMP_PATH) $(BUILD_PATH) $(COV_PATH) doc
 	rm -rf -f $(EXEC)
 
 $(DEP_PATH)/%.d: ;
