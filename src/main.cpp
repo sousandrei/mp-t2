@@ -2,9 +2,9 @@
 #include <iostream>
 
 int main() {
-	Roman *a = new Roman("pene");
+	Roman *a = new Roman("X");
 
-	std::cout << a->getLength() << std::endl;
+	std::cout << a->getNumber() << std::endl;
 
 	return 0;
 }
