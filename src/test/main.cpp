@@ -13,6 +13,7 @@ TEST(Roman, createValid) {
 
 	ASSERT_EQ(1, a->getLength());
 	ASSERT_EQ(10, a->getNumber());
+	ASSERT_EQ("X", a->getRomanNumber());
 
 	delete a;
 }

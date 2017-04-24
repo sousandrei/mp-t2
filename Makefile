@@ -74,7 +74,7 @@ release: DIRECTIVES += -Ofast -mtune=native
 release: clean all
 
 clean:
-	rm -rf $(TMP_PATH) $(BUILD_PATH) $(COV_PATH) doc
+	rm -rf $(TMP_PATH) $(BUILD_PATH) $(COV_PATH) /doc
 	rm -rf -f $(EXEC)
 
 $(DEP_PATH)/%.d: ;

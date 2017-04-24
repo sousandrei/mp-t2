@@ -83,3 +83,4 @@ Roman::~Roman() {}
 
 int Roman::getLength() { return number.length(); }
 int Roman::getNumber() { return this->numberInt; }
+std::string Roman::getRomanNumber() { return this->number; }
